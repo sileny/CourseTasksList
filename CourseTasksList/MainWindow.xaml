@@ -3,16 +3,163 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Задачник"
         Height="600" Width="800"
-        MinHeight="400" MinWidth="500"
+        MinHeight="420" MinWidth="640"
         WindowStartupLocation="CenterScreen"
         FontFamily="Segoe UI">
 
-    <Grid>
-        <TextBlock Text="Задачник"
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок окна -->
+        <TextBlock Grid.Row="0"
+                   Text="Задачник"
                    FontSize="28"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,20,0,0"/>
+                   Margin="0,4,0,16"/>
+
+        <!-- Таблица задач -->
+        <DockPanel Grid.Row="1">
+
+            <!-- Шапка таблицы -->
+            <Border DockPanel.Dock="Top"
+                    BorderBrush="#C8C8C8"
+                    BorderThickness="0,0,0,2"
+                    Padding="6,6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="32"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Задача" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="1" Text="Дата добавления" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="2" Text="Срок сдачи" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="3" Text="Статус задачи" FontWeight="Bold"/>
+                </Grid>
+            </Border>
+
+            <!-- Строки таблицы (пока статичные, для проверки разметки) -->
+            <StackPanel>
+
+                <Border BorderBrush="#E5E5E5" BorderThickness="0,0,0,1" Padding="6,8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="32"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Подготовить отчёт по практике" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Grid.Column="1" Text="21.10.2026"/>
+                        <TextBlock Grid.Column="2" Text="30.10.2026"/>
+                        <TextBlock Grid.Column="3" Text="Запланировано"/>
+
+                        <Button Grid.Column="4"
+                                Content="✕"
+                                Width="24" Height="24"
+                                Padding="0"
+                                HorizontalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <Border BorderBrush="#E5E5E5" BorderThickness="0,0,0,1" Padding="6,8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="32"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Сдать курсовую работу" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Grid.Column="1" Text="18.10.2026"/>
+                        <TextBlock Grid.Column="2" Text="05.11.2026"/>
+                        <TextBlock Grid.Column="3" Text="В процессе"/>
+
+                        <Button Grid.Column="4"
+                                Content="✕"
+                                Width="24" Height="24"
+                                Padding="0"
+                                HorizontalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <Border BorderBrush="#E5E5E5" BorderThickness="0,0,0,1" Padding="6,8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="32"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Купить продукты" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Grid.Column="1" Text="15.10.2026"/>
+                        <TextBlock Grid.Column="2" Text="—"/>
+                        <TextBlock Grid.Column="3" Text="Выполнено"/>
+
+                        <Button Grid.Column="4"
+                                Content="✕"
+                                Width="24" Height="24"
+                                Padding="0"
+                                HorizontalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <Border BorderBrush="#E5E5E5" BorderThickness="0,0,0,1" Padding="6,8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="32"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Разобрать старые конспекты" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Grid.Column="1" Text="10.10.2026"/>
+                        <TextBlock Grid.Column="2" Text="20.10.2026"/>
+                        <TextBlock Grid.Column="3" Text="Отложено"/>
+
+                        <Button Grid.Column="4"
+                                Content="✕"
+                                Width="24" Height="24"
+                                Padding="0"
+                                HorizontalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </DockPanel>
+
+        <!-- Кнопки внизу (пока без функционала) -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,16,0,0">
+            <Button Content="Добавить задачу"
+                    MinWidth="150"
+                    Padding="16,5"
+                    Margin="0,0,10,0"/>
+            <Button Content="Редактировать задачи"
+                    MinWidth="150"
+                    Padding="16,5"
+                    Margin="0,0,10,0"/>
+            <Button Content="Сохранить и выйти"
+                    MinWidth="150"
+                    Padding="16,5"/>
+        </StackPanel>
     </Grid>
 </Window>
