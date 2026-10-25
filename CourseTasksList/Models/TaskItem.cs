@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json.Serialization;
 using CourseTasksList.Infrastructure;
 
@@ -29,7 +30,34 @@ public sealed class TaskItem : ObservableObject
     public DateTime? Deadline
     {
         get => _deadline;
-        set => SetProperty(ref _deadline, value);
+        set
+        {
+            if (SetProperty(ref _deadline, value))
+                OnPropertyChanged(nameof(DeadlineText));
+        }
+    }
+
+    /// <summary>
+    /// Срок сдачи в виде текста дд.мм.гггг — для поля ввода.
+    /// При неверном формате введённый текст отбрасывается.
+    /// </summary>
+    [JsonIgnore]
+    public string DeadlineText
+    {
+        get => _deadline?.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture) ?? string.Empty;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                Deadline = null;
+                return;
+            }
+
+            string[] formats = ["dd.MM.yyyy", "d.M.yyyy", "dd.MM.yy", "d.M.yy"];
+            if (DateTime.TryParseExact(value.Trim(), formats, CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out var date))
+                Deadline = date;
+        }
     }
 
     /// <summary>Состояние задачи.</summary>

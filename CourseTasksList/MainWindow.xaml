@@ -108,10 +108,11 @@
                                                Text="{Binding Deadline, StringFormat=dd.MM.yyyy, TargetNullValue=—}"
                                                VerticalAlignment="Center"
                                                Style="{StaticResource VisibleWhenNotEditing}"/>
-                                    <DatePicker Grid.Column="3"
-                                                SelectedDate="{Binding Deadline, Mode=TwoWay}"
-                                                VerticalAlignment="Center"
-                                                Style="{StaticResource VisibleWhenEditing}"/>
+                                    <TextBox Grid.Column="3"
+                                             Text="{Binding DeadlineText, UpdateSourceTrigger=LostFocus}"
+                                             Padding="2,1"
+                                             VerticalAlignment="Center"
+                                             Style="{StaticResource VisibleWhenEditing}"/>
 
                                     <!-- Статус -->
                                     <TextBlock Grid.Column="4"
