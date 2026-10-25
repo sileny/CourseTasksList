@@ -9,8 +9,8 @@ namespace CourseTasksList.Services;
 public interface ITaskStorage
 {
     /// <summary>Читает все задачи.</summary>
-    List<TaskItem> Load();
+    List<TaskBase> Load();
 
     /// <summary>Записывает задачи.</summary>
-    void Save(IEnumerable<TaskItem> tasks);
+    void Save(IEnumerable<TaskBase> tasks);
 }

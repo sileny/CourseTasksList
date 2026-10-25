@@ -23,28 +23,28 @@ public sealed class JsonTaskStorage : ITaskStorage
 
     public string FilePath => _filePath;
 
-    public List<TaskItem> Load()
+    public List<TaskBase> Load()
     {
         try
         {
             if (!File.Exists(_filePath))
-                return new List<TaskItem>();
+                return new List<TaskBase>();
 
             var json = File.ReadAllText(_filePath);
-            return JsonSerializer.Deserialize<List<TaskItem>>(json, SerializerOptions)
-                   ?? new List<TaskItem>();
+            return JsonSerializer.Deserialize<List<TaskBase>>(json, SerializerOptions)
+                   ?? new List<TaskBase>();
         }
         catch (JsonException)
         {
-            return new List<TaskItem>();
+            return new List<TaskBase>();
         }
         catch (IOException)
         {
-            return new List<TaskItem>();
+            return new List<TaskBase>();
         }
     }
 
-    public void Save(IEnumerable<TaskItem> tasks)
+    public void Save(IEnumerable<TaskBase> tasks)
     {
         var json = JsonSerializer.Serialize(tasks.ToList(), SerializerOptions);
         File.WriteAllText(_filePath, json);

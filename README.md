@@ -33,10 +33,14 @@ dotnet run --project CourseTasksList
 (`bin/Debug/net10.0-windows/tasks.json`). Файл `CourseTasksList/tasks.json`
 в проекте — исходный шаблон, он копируется в папку сборки.
 
-Пример записи:
+> Файлы, сохранённые до появления видов задач, не содержат поля `$type`.
+> Такие записи прочитать нельзя — приложение начнёт с пустого списка.
+
+Пример записи (поле `$type` хранит вид задачи — просто́й или со сроком):
 
 ```json
 {
+  "$type": "deadline",
   "Id": "1fdb9ec5-601c-4f74-b956-9eaa9de01c5a",
   "CreatedAt": "2026-10-25T00:00:00",
   "Title": "Сдать курсовую",
@@ -55,9 +59,12 @@ CourseTasksList/
     MainWindow.xaml       разметка главного окна и шаблон строки
     MainWindow.xaml.cs    связывание окна с моделью представления
     Models/
-        TaskItem.cs       модель задачи
+        TaskBase.cs       абстрактный базовый класс задачи
+        SimpleTask.cs     задача без срока
+        DeadlineTask.cs   задача со сроком, умеет считать просрочку
         TaskState.cs      перечисление состояний
         TaskStateExtensions.cs  подписи состояний для интерфейса
+        InvalidInputEventArgs.cs  аргументы события об ошибке ввода
     Services/
         ITaskStorage.cs   интерфейс хранилища
         JsonTaskStorage.cs  реализация хранения в JSON
@@ -65,5 +72,5 @@ CourseTasksList/
         MainViewModel.cs  логика окна: команды, список задач
     Infrastructure/
         ObservableObject.cs  база с INotifyPropertyChanged
-        RelayCommand.cs      реализация ICommand
+        RelayCommand.cs      база команд и две реализации ICommand
 ```
