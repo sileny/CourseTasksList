@@ -7,6 +7,28 @@
         WindowStartupLocation="CenterScreen"
         FontFamily="Segoe UI">
 
+    <Window.Resources>
+        <!-- Показывать элемент только в режиме редактирования строки -->
+        <Style x:Key="VisibleWhenEditing" TargetType="FrameworkElement">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsEditing}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Показывать элемент только когда строка не редактируется -->
+        <Style x:Key="VisibleWhenNotEditing" TargetType="FrameworkElement">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsEditing}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -47,15 +69,102 @@
                 </Grid>
             </Border>
 
-            <!-- Прокручиваемая область со строками задач -->
+            <!-- Прокручиваемый список задач -->
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled">
-                <StackPanel x:Name="TasksPanel"/>
+                <ItemsControl ItemsSource="{Binding Tasks}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#E5E5E5" BorderThickness="0,0,0,1" Padding="6,6">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.5*"/>
+                                        <ColumnDefinition Width="0.5*"/>
+                                        <ColumnDefinition Width="16"/>
+                                        <ColumnDefinition Width="0.5*"/>
+                                        <ColumnDefinition Width="0.75*"/>
+                                        <ColumnDefinition Width="60"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Задача -->
+                                    <TextBlock Grid.Column="0"
+                                               Text="{Binding Title}"
+                                               TextTrimming="CharacterEllipsis"
+                                               VerticalAlignment="Center"
+                                               Style="{StaticResource VisibleWhenNotEditing}"/>
+                                    <TextBox Grid.Column="0"
+                                             Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+                                             Padding="2,1"
+                                             VerticalAlignment="Center"
+                                             Style="{StaticResource VisibleWhenEditing}"/>
+
+                                    <!-- Дата добавления -->
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding CreatedAt, StringFormat=dd.MM.yyyy}"
+                                               VerticalAlignment="Center"/>
+
+                                    <!-- Срок сдачи -->
+                                    <TextBlock Grid.Column="3"
+                                               Text="{Binding Deadline, StringFormat=dd.MM.yyyy, TargetNullValue=—}"
+                                               VerticalAlignment="Center"
+                                               Style="{StaticResource VisibleWhenNotEditing}"/>
+                                    <TextBox Grid.Column="3"
+                                             Text="{Binding DeadlineText, UpdateSourceTrigger=LostFocus}"
+                                             Padding="2,1"
+                                             VerticalAlignment="Center"
+                                             Style="{StaticResource VisibleWhenEditing}"/>
+
+                                    <!-- Статус -->
+                                    <TextBlock Grid.Column="4"
+                                               Text="{Binding StatusTitle}"
+                                               VerticalAlignment="Center"
+                                               Style="{StaticResource VisibleWhenNotEditing}"/>
+                                    <ComboBox Grid.Column="4"
+                                              ItemsSource="{Binding DataContext.StatusOptions,
+                                                            RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                              DisplayMemberPath="Title"
+                                              SelectedValuePath="Value"
+                                              SelectedValue="{Binding Status, Mode=TwoWay}"
+                                              IsEnabled="{Binding IsExisting}"
+                                              VerticalAlignment="Center"
+                                              Style="{StaticResource VisibleWhenEditing}"/>
+
+                                    <!-- Кнопки строки -->
+                                    <StackPanel Grid.Column="5"
+                                                Orientation="Horizontal"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">
+                                        <Button Content="Д"
+                                                Width="24" Height="24" Padding="0" Margin="0,0,4,0"
+                                                ToolTip="Добавить задачу в планировщик"
+                                                Command="{Binding DataContext.CommitTaskCommand,
+                                                          RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource VisibleWhenEditing}"/>
+                                        <Button Content="Р"
+                                                Width="24" Height="24" Padding="0" Margin="0,0,4,0"
+                                                ToolTip="Редактировать задачу"
+                                                Command="{Binding DataContext.EditTaskCommand,
+                                                          RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource VisibleWhenNotEditing}"/>
+                                        <Button Content="✕"
+                                                Width="24" Height="24" Padding="0"
+                                                ToolTip="Удалить задачу"
+                                                Command="{Binding DataContext.DeleteTaskCommand,
+                                                          RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
 
         </DockPanel>
 
-        <!-- Кнопки внизу (пока без функционала) -->
+        <!-- Кнопки внизу -->
         <StackPanel Grid.Row="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
@@ -63,10 +172,12 @@
             <Button Content="Добавить задачу"
                     MinWidth="150"
                     Padding="16,5"
-                    Margin="0,0,10,0"/>
+                    Margin="0,0,10,0"
+                    Command="{Binding AddTaskCommand}"/>
             <Button Content="Сохранить и выйти"
                     MinWidth="150"
-                    Padding="16,5"/>
+                    Padding="16,5"
+                    Command="{Binding SaveAndExitCommand}"/>
         </StackPanel>
     </Grid>
 </Window>
