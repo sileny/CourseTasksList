@@ -24,6 +24,9 @@ public sealed class MainViewModel : ObservableObject
         EditTaskCommand = new RelayCommand<TaskItem>(EditTask);
         DeleteTaskCommand = new RelayCommand<TaskItem>(DeleteTask);
         SaveAndExitCommand = new RelayCommand(SaveAndExit);
+
+        foreach (var task in Tasks)
+            task.InvalidInputEntered += OnTaskInvalidInput;
     }
 
     /// <summary>Задачи, отображаемые в таблице.</summary>
@@ -45,6 +48,9 @@ public sealed class MainViewModel : ObservableObject
     /// <summary>Событие: данные сохранены, окно можно закрывать.</summary>
     public event EventHandler? SaveAndExitRequested;
 
+    /// <summary>Событие: нужно показать пользователю сообщение.</summary>
+    public event EventHandler<InvalidInputEventArgs>? NotificationRequested;
+
     private void AddTask()
     {
         var task = new TaskItem
@@ -55,6 +61,7 @@ public sealed class MainViewModel : ObservableObject
             IsEditing = true
         };
 
+        task.InvalidInputEntered += OnTaskInvalidInput;
         Tasks.Insert(0, task);
     }
 
@@ -70,7 +77,14 @@ public sealed class MainViewModel : ObservableObject
 
     private void EditTask(TaskItem task) => task.IsEditing = true;
 
-    private void DeleteTask(TaskItem task) => Tasks.Remove(task);
+    private void DeleteTask(TaskItem task)
+    {
+        task.InvalidInputEntered -= OnTaskInvalidInput;
+        Tasks.Remove(task);
+    }
+
+    private void OnTaskInvalidInput(object? sender, InvalidInputEventArgs e)
+        => NotificationRequested?.Invoke(this, e);
 
     private void SaveAndExit()
     {

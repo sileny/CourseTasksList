@@ -13,6 +13,9 @@ public sealed class TaskItem : ObservableObject
     private bool _isEditing;
     private bool _isNew;
 
+    /// <summary>Возникает, когда пользователь ввёл недопустимое значение в поле задачи.</summary>
+    public event EventHandler<InvalidInputEventArgs>? InvalidInputEntered;
+
     /// <summary>Уникальный идентификатор задачи.</summary>
     public Guid Id { get; set; } = Guid.NewGuid();
 
@@ -39,7 +42,7 @@ public sealed class TaskItem : ObservableObject
 
     /// <summary>
     /// Срок сдачи в виде текста дд.мм.гггг — для поля ввода.
-    /// При неверном формате введённый текст отбрасывается.
+    /// При неверном формате поле возвращается к прежнему значению и сообщается об ошибке.
     /// </summary>
     [JsonIgnore]
     public string DeadlineText
@@ -56,7 +59,16 @@ public sealed class TaskItem : ObservableObject
             string[] formats = ["dd.MM.yyyy", "d.M.yyyy", "dd.MM.yy", "d.M.yy"];
             if (DateTime.TryParseExact(value.Trim(), formats, CultureInfo.InvariantCulture,
                     DateTimeStyles.None, out var date))
+            {
                 Deadline = date;
+                return;
+            }
+
+            InvalidInputEntered?.Invoke(this, new InvalidInputEventArgs(
+                "Введи дату в формате ДД.ММ.ГГГГ исключительно цифрами"));
+
+            // Возвращаем в поле последнее корректное значение.
+            OnPropertyChanged(nameof(DeadlineText));
         }
     }
 
