@@ -32,17 +32,18 @@
                     Padding="6,6">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.75*"/>
+                        <ColumnDefinition Width="60"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0" Text="Задача" FontWeight="Bold"/>
                     <TextBlock Grid.Column="1" Text="Дата добавления" FontWeight="Bold"/>
-                    <TextBlock Grid.Column="2" Text="Срок сдачи" FontWeight="Bold"/>
-                    <TextBlock Grid.Column="3" Text="Статус задачи" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="3" Text="Срок сдачи" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="4" Text="Статус задачи" FontWeight="Bold"/>
                 </Grid>
             </Border>
 
@@ -52,92 +53,92 @@
                 <Border BorderBrush="#E5E5E5" BorderThickness="0,0,0,1" Padding="6,8">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="32"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.75*"/>
+                            <ColumnDefinition Width="60"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="Подготовить отчёт по практике" TextTrimming="CharacterEllipsis"/>
                         <TextBlock Grid.Column="1" Text="21.10.2026"/>
-                        <TextBlock Grid.Column="2" Text="30.10.2026"/>
-                        <TextBlock Grid.Column="3" Text="Запланировано"/>
+                        <TextBlock Grid.Column="3" Text="30.10.2026"/>
+                        <TextBlock Grid.Column="4" Text="Запланировано"/>
 
-                        <Button Grid.Column="4"
-                                Content="✕"
-                                Width="24" Height="24"
-                                Padding="0"
-                                HorizontalAlignment="Center"/>
+                        <StackPanel Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="Р" Width="24" Height="24" Padding="0" Margin="0,0,4,0"/>
+                            <Button Content="✕" Width="24" Height="24" Padding="0"/>
+                        </StackPanel>
                     </Grid>
                 </Border>
 
                 <Border BorderBrush="#E5E5E5" BorderThickness="0,0,0,1" Padding="6,8">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="32"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.75*"/>
+                            <ColumnDefinition Width="60"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="Сдать курсовую работу" TextTrimming="CharacterEllipsis"/>
                         <TextBlock Grid.Column="1" Text="18.10.2026"/>
-                        <TextBlock Grid.Column="2" Text="05.11.2026"/>
-                        <TextBlock Grid.Column="3" Text="В процессе"/>
+                        <TextBlock Grid.Column="3" Text="05.11.2026"/>
+                        <TextBlock Grid.Column="4" Text="В процессе"/>
 
-                        <Button Grid.Column="4"
-                                Content="✕"
-                                Width="24" Height="24"
-                                Padding="0"
-                                HorizontalAlignment="Center"/>
+                        <StackPanel Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="Р" Width="24" Height="24" Padding="0" Margin="0,0,4,0"/>
+                            <Button Content="✕" Width="24" Height="24" Padding="0"/>
+                        </StackPanel>
                     </Grid>
                 </Border>
 
                 <Border BorderBrush="#E5E5E5" BorderThickness="0,0,0,1" Padding="6,8">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="32"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.75*"/>
+                            <ColumnDefinition Width="60"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="Купить продукты" TextTrimming="CharacterEllipsis"/>
                         <TextBlock Grid.Column="1" Text="15.10.2026"/>
-                        <TextBlock Grid.Column="2" Text="—"/>
-                        <TextBlock Grid.Column="3" Text="Выполнено"/>
+                        <TextBlock Grid.Column="3" Text="—"/>
+                        <TextBlock Grid.Column="4" Text="Выполнено"/>
 
-                        <Button Grid.Column="4"
-                                Content="✕"
-                                Width="24" Height="24"
-                                Padding="0"
-                                HorizontalAlignment="Center"/>
+                        <StackPanel Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="Р" Width="24" Height="24" Padding="0" Margin="0,0,4,0"/>
+                            <Button Content="✕" Width="24" Height="24" Padding="0"/>
+                        </StackPanel>
                     </Grid>
                 </Border>
 
                 <Border BorderBrush="#E5E5E5" BorderThickness="0,0,0,1" Padding="6,8">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="32"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.75*"/>
+                            <ColumnDefinition Width="60"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="Разобрать старые конспекты" TextTrimming="CharacterEllipsis"/>
                         <TextBlock Grid.Column="1" Text="10.10.2026"/>
-                        <TextBlock Grid.Column="2" Text="20.10.2026"/>
-                        <TextBlock Grid.Column="3" Text="Отложено"/>
+                        <TextBlock Grid.Column="3" Text="20.10.2026"/>
+                        <TextBlock Grid.Column="4" Text="Отложено"/>
 
-                        <Button Grid.Column="4"
-                                Content="✕"
-                                Width="24" Height="24"
-                                Padding="0"
-                                HorizontalAlignment="Center"/>
+                        <StackPanel Grid.Column="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="Р" Width="24" Height="24" Padding="0" Margin="0,0,4,0"/>
+                            <Button Content="✕" Width="24" Height="24" Padding="0"/>
+                        </StackPanel>
                     </Grid>
                 </Border>
 
@@ -150,10 +151,6 @@
                     HorizontalAlignment="Center"
                     Margin="0,16,0,0">
             <Button Content="Добавить задачу"
-                    MinWidth="150"
-                    Padding="16,5"
-                    Margin="0,0,10,0"/>
-            <Button Content="Редактировать задачи"
                     MinWidth="150"
                     Padding="16,5"
                     Margin="0,0,10,0"/>
