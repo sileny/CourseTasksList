@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Локальный служебный каталог dotnet CLI
+.dotnet-cli/
+
+# Локальный архив вариантов дизайна
+_design-preview/
