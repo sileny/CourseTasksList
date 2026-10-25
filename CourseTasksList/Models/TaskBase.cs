@@ -4,8 +4,14 @@ using CourseTasksList.Infrastructure;
 
 namespace CourseTasksList.Models;
 
-/// <summary>Одна задача планировщика.</summary>
-public sealed class TaskItem : ObservableObject
+/// <summary>
+/// Общая часть всех задач планировщика.
+/// Конкретные виды задач наследуются от этого класса.
+/// </summary>
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "$type")]
+[JsonDerivedType(typeof(SimpleTask), "simple")]
+[JsonDerivedType(typeof(DeadlineTask), "deadline")]
+public abstract class TaskBase : ObservableObject
 {
     private string _title = string.Empty;
     private DateTime? _deadline;
@@ -35,8 +41,11 @@ public sealed class TaskItem : ObservableObject
         get => _deadline;
         set
         {
-            if (SetProperty(ref _deadline, value))
-                OnPropertyChanged(nameof(DeadlineText));
+            if (!SetProperty(ref _deadline, value))
+                return;
+
+            OnPropertyChanged(nameof(DeadlineText));
+            OnPropertyChanged(nameof(IsOverdue));
         }
     }
 
@@ -78,14 +87,24 @@ public sealed class TaskItem : ObservableObject
         get => _state;
         set
         {
-            if (SetProperty(ref _state, value))
-                OnPropertyChanged(nameof(StatusTitle));
+            if (!SetProperty(ref _state, value))
+                return;
+
+            OnPropertyChanged(nameof(StatusTitle));
+            OnPropertyChanged(nameof(IsOverdue));
         }
     }
 
     /// <summary>Подпись состояния для отображения в таблице. Вычисляется на лету.</summary>
     [JsonIgnore]
     public string StatusTitle => _state.ToRussian();
+
+    /// <summary>
+    /// Просрочена ли задача. Правило зависит от вида задачи,
+    /// поэтому свойство абстрактное — его задаёт каждый наследник.
+    /// </summary>
+    [JsonIgnore]
+    public abstract bool IsOverdue { get; }
 
     /// <summary>Строка сейчас редактируется. В файл не сохраняется.</summary>
     [JsonIgnore]
